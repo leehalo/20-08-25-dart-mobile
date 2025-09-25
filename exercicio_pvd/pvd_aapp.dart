@@ -1,0 +1,84 @@
+import 'dart.io';
+import 'produto.dart';
+import'item_compra.dart';
+import 'carrinho_compra.dart';
+
+Class PVDApp{
+    carrinho_compra carrinho = carrinho_compra();
+    void iniciar(){
+        print ('\n==sistema de PVD\n');
+        print ('Bem-vindo ao sistema!');
+        bool continuar = true;
+        while(continuar){
+            print('\nDeseja adicionar um produto ao carrinho? (S/n)');
+            String resposta = stdin.readLineSync()?.toUpperCase()?? 'N';
+        
+                if(resposta == 'S'){
+                    ItemCompra item = lerDadosCompra();
+                    carrinho.adicionarItem(item);
+                    print ('\nProduto adicionado com sucesso!');
+                }else{
+                    continuar=false;
+                }
+            }
+            if(carrinho.estaVazio()){
+                print('\nNenhum produto foi adicionado ao carrinho.');
+                print('\nObrigado por usar o sistema PDV');
+            } else {
+                exibirResultado();
+
+                ItemCompra lerDadosProduto(){
+                    print('\n-- Adicionar Produto --');
+                    print('\n Nome do Produto:');
+                    String nome = stdin.readLineSync()?? '';
+
+                    double valor = 0;
+                    bool valorValido = false;
+
+                    while (!valorValido){
+                        print('\nValor unitário:');
+                        String input = stdin.readLineSync() ?? '0';
+                        ValorUnitario = double.parse(input.reaplaceAll(',','.'));
+                        if(ValorUnitario <= 0){
+                            print('\nValor deve ser maior que zero.');
+                        }else {
+                            valorValido = true;
+                        }
+                    }
+                int quantidade = 0;
+                bool quantidadeValida = true;
+
+                while (quantidadeValida){
+                print('\nQuantidade:');
+                String input = stdin.readLineSync() ?? '0';
+                if(quantidade <= 0){
+                    print('\nErro: A quantidade deve ser maior que zero.');
+                } else {
+                    quantidadeValida = true;
+                }                
+            }
+            
+            Produto produto = Produto(nome, ValorUnitario);
+            return ItemCompra(produto, quantidade);
+        }
+        void exibirResultado(){
+            double total = carrinho.calcularTotal();
+            double desconto = carrinho.calcularDesconto();
+            double valorFinal = carrinho.calcularValorFinal();
+            print('\n--RESUMO DA COMPRA==');
+            print('${i+1}, ${carrinho.itens[i]}');
+        }
+
+        print('\nTotal de itens: ${carrinho.quantidadeItens()}');
+        print('\nValor total: R/$ ${total.toStringAsFixed(2)}');
+
+        if(desconto > 0){
+            print('\nDesconto (10%): R/$ ${desconto.toStringAsFixed(2)}');
+        }else{
+            print('\nDesconto: R\$ 0.00');
+        }
+
+        print('\nValor final: R/$ ${valorFinal.toStringAsFixed(2)}');
+        print('\nObrigado por utilizar o sistema PVD');
+    }   
+ }  
